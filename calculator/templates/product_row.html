@@ -1,0 +1,31 @@
+
+<tr id="product-{{ product.id }}"> 
+
+    <td>{{ product.name }}</td>
+    <td>{{ product.price_excl_tax }}</td>
+    <td>{{ product.tax_rate }}</td> 
+    <td>{{ product.price_incl_tax }}</td>
+    <td>  
+      <button 
+        hx-get="{% url 'get_product' product.id %}" 
+        hx-target="form"
+        hx-swap="outerHTML">
+        Modifier/Voir
+      </button>
+
+      <button hx-delete="{% url 'delete_product' product.id %}" 
+              hx-target="#product-{{ product.id }}" 
+              hx-swap="outerHTML"> 
+
+        Delete
+      </button>
+    </td> 
+    <script>
+        // Ajouter automatiquement le token CSRF dans les requêtes HTMX
+        document.addEventListener('htmx:configRequest', function (event) {
+          var csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+          event.detail.headers['X-CSRFToken'] = csrfToken;  // Ajoute le token CSRF dans les en-têtes
+        });
+      </script>
+      
+  </tr> 
