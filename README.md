@@ -1,4 +1,4 @@
-# Django HTMX Calculator
+# Django HTMX Tax Calculator
 
 ### Description
 
