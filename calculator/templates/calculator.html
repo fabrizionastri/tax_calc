@@ -136,6 +136,23 @@
           }
         }
       })
+
+      document.addEventListener('change', event => {
+        const form = event.target.closest('form')
+        const formData = new FormData(form)
+
+        const priceExclTax = parseFloat(formData.get('price_excl_tax'))
+        const priceInclTax = parseFloat(formData.get('price_incl_tax'))
+
+        if (event.target.id === 'price_incl_tax' || event.target.id === 'price_excl_tax') {
+          if (!isNaN(priceExclTax) && !isNaN(priceInclTax) && isNaN(parseFloat(formData.get('tax_rate')))) {
+            // Calculate tax rate if both prices are known
+            const calculatedTaxRate = ((priceInclTax / priceExclTax) - 1) * 100
+            document.getElementById('tax_rate').value =
+              calculatedTaxRate.toFixed(2)
+          }
+        }
+      })
     </script>
   </body>
 </html>
